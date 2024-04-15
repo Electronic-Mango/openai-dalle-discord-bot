@@ -59,8 +59,10 @@ async def _stop(context: Context) -> None:
 async def on_message(event: MessageCreateEvent) -> None:
     if await _should_skip_message(event):
         return
-    image_url = await generate_image(event.content)
-    await event.message.respond(URL(image_url))
+    channel = await event.message.fetch_channel()
+    async with channel.trigger_typing():
+        image_url = await generate_image(event.content)
+        await event.message.respond(URL(image_url))
 
 
 async def _should_skip_message(event: MessageCreateEvent) -> bool:

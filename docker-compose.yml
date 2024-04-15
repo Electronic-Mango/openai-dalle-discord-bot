@@ -10,7 +10,9 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      - SOURCES_PERSISTENCE_FILE=persistence
+      - SOURCES_PERSISTENCE_FILE=/persistence/all
+    volumes:
+      - ./persistence/:/persistence/
     logging:
       driver: "json-file"
       options:

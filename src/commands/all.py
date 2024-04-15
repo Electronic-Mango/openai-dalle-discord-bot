@@ -1,4 +1,4 @@
-from hikari import MessageCreateEvent, URL
+from hikari import URL, MessageCreateEvent
 from lightbulb import BotApp, Context, Plugin, SlashCommand, add_checks, command, implements
 
 from command_check import check

@@ -1,18 +1,18 @@
 from os import getenv
 
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 load_dotenv()
 
 TOKEN = getenv("OPENAI_TOKEN")
 MODEL = getenv("OPENAI_MODEL")
 
-client = OpenAI(api_key=TOKEN)
+client = AsyncOpenAI(api_key=TOKEN)
 
 
-def generate_image(prompt: str) -> str | None:
-    response = client.images.generate(
+async def generate_image(prompt: str) -> str | None:
+    response = await client.images.generate(
         model=MODEL,
         prompt=prompt,
         size="1024x1024",

@@ -25,7 +25,7 @@ async def ask_directly(context: Context) -> None:
 
 
 async def _generate_image(context: Context, prompt: str) -> None:
-    image_url = generate_image(prompt)
+    image_url = await generate_image(prompt)
     await context.respond(image_url)
 
 

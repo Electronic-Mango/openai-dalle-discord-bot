@@ -59,7 +59,7 @@ async def _stop(context: Context) -> None:
 async def on_message(event: MessageCreateEvent) -> None:
     if await _should_skip_message(event):
         return
-    image_url = generate_image(event.content)
+    image_url = await generate_image(event.content)
     await event.message.respond(URL(image_url))
 
 

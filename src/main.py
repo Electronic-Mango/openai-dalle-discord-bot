@@ -7,13 +7,18 @@ from lightbulb import BotApp
 from commands.all import load as load_all
 from commands.generate import load as load_ask
 
-load_dotenv()
-
 INTENTS = Intents.MESSAGE_CONTENT | Intents.DM_MESSAGES | Intents.GUILD_MESSAGES
+TOKEN = getenv("BOT_TOKEN")
+LOG_LEVEL = "DEBUG"
 
-bot = BotApp(token=getenv("BOT_TOKEN"), intents=INTENTS, logs="DEBUG")
 
-load_all(bot)
-load_ask(bot)
+def main():
+    load_dotenv()
+    bot = BotApp(token=TOKEN, intents=INTENTS, logs=LOG_LEVEL)
+    load_all(bot)
+    load_ask(bot)
+    bot.run()
 
-bot.run()
+
+if __name__ == "__main__":
+    main()

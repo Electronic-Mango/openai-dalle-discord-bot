@@ -13,10 +13,7 @@ services:
       - SOURCES_PERSISTENCE_FILE=/persistence/all
     volumes:
       - ./persistence/:/persistence/
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
+
 networks:
   default:
     name: dalle-discord-bot-network

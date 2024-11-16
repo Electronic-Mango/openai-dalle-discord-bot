@@ -61,8 +61,8 @@ async def on_message(event: MessageCreateEvent) -> None:
         return
     channel = await event.message.fetch_channel()
     async with channel.trigger_typing():
-        image_url = await generate_image(event.content)
-        await event.message.respond(URL(image_url))
+        image_url = generate_image(event.content)
+        await event.message.respond(image_url)
 
 
 async def _should_skip_message(event: MessageCreateEvent) -> bool:

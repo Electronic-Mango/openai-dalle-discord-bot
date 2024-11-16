@@ -13,7 +13,7 @@ MODEL = getenv("OPENAI_MODEL")
 client = OpenAI(api_key=TOKEN)
 
 
-def generate_image(prompt: str) -> str:
+def generate_image(prompt: str) -> tuple[str, bool]:
     try:
         response = client.images.generate(
             model=MODEL,
@@ -23,12 +23,13 @@ def generate_image(prompt: str) -> str:
             quality="standard",
             n=1,
         )
-        return response.data[0].url
+        return response.data[0].url, True
     except APIError as error:
-        return (
+        error_message = (
             error.body.get("message", DEFAULT_ERROR_MESSAGE)
             if isinstance(error.body, dict)
             else DEFAULT_ERROR_MESSAGE
         )
+        return error_message, False
     except OpenAIError:
-        return DEFAULT_ERROR_MESSAGE
+        return DEFAULT_ERROR_MESSAGE, False

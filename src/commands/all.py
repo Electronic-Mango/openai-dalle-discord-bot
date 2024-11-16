@@ -4,7 +4,7 @@ from hikari import MessageCreateEvent
 from lightbulb import BotApp, Context, Plugin, SlashCommand, add_checks, command, implements
 
 from command_check import check
-from images import generate_image
+from commands.sender import send_image
 from persistence import load_source_channels, store_source_channel
 
 all_plugin = Plugin("all_plugin")
@@ -64,8 +64,7 @@ async def on_message(event: MessageCreateEvent) -> None:
     channel = await event.message.fetch_channel()
     async with channel.trigger_typing():
         await sleep(0.1)  # Give the bot some time to trigger typing indicator.
-        image_url = generate_image(event.content)
-        await event.message.respond(image_url)
+        await send_image(event.message, event.content)
 
 
 async def _should_skip_message(event: MessageCreateEvent) -> bool:

@@ -2,7 +2,7 @@ from lightbulb import BotApp, Context, Plugin, SlashCommand, add_checks, command
 from lightbulb.commands import MessageCommand
 
 from command_check import check
-from images import generate_image
+from commands.sender import send_image
 
 generate_plugin = Plugin("generate_plugin")
 
@@ -13,7 +13,7 @@ generate_plugin = Plugin("generate_plugin")
 @command("generate", "Generate image based on prompt", auto_defer=True)
 @implements(SlashCommand)
 async def generate(context: Context) -> None:
-    await _generate_image(context, context.options.prompt)
+    await send_image(context, context.options.prompt)
 
 
 @generate_plugin.command()
@@ -21,12 +21,7 @@ async def generate(context: Context) -> None:
 @command("generate", "Generate image for given message", auto_defer=True)
 @implements(MessageCommand)
 async def generate_directly(context: Context) -> None:
-    await _generate_image(context, context.options.target.content)
-
-
-async def _generate_image(context: Context, prompt: str) -> None:
-    image_url = generate_image(prompt)
-    await context.respond(image_url)
+    await send_image(context, context.options.target.content)
 
 
 def load(bot: BotApp) -> None:

@@ -1,4 +1,6 @@
-from hikari import URL, MessageCreateEvent
+from asyncio import sleep
+
+from hikari import MessageCreateEvent
 from lightbulb import BotApp, Context, Plugin, SlashCommand, add_checks, command, implements
 
 from command_check import check
@@ -61,6 +63,7 @@ async def on_message(event: MessageCreateEvent) -> None:
         return
     channel = await event.message.fetch_channel()
     async with channel.trigger_typing():
+        await sleep(0.1)  # Give the bot some time to trigger typing indicator.
         image_url = generate_image(event.content)
         await event.message.respond(image_url)
 
